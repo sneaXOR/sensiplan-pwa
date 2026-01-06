@@ -15,6 +15,7 @@ function App() {
     const [currentView, setCurrentView] = useState<View>('today');
     const [profile, setProfile] = useState<UserProfile | null>(null);
     const [loading, setLoading] = useState(true);
+    const [selectedDate, setSelectedDate] = useState<string>(new Date().toISOString().split('T')[0]);
 
     // Charger le profil au démarrage
     useEffect(() => {
@@ -44,6 +45,11 @@ function App() {
         }
     };
 
+    const navigateToDate = (date: string) => {
+        setSelectedDate(date);
+        setCurrentView('today');
+    };
+
     if (loading) {
         return (
             <div className="loading-screen">
@@ -69,8 +75,17 @@ function App() {
 
             {/* Main Content */}
             <main className="container">
-                {currentView === 'today' && <DailyEntry />}
-                {currentView === 'calendar' && <Calendar />}
+                {currentView === 'today' && (
+                    <DailyEntry
+                        initialDate={selectedDate}
+                        onDateChange={setSelectedDate}
+                    />
+                )}
+                {currentView === 'calendar' && (
+                    <Calendar
+                        onDateSelect={navigateToDate}
+                    />
+                )}
                 {currentView === 'settings' && <Settings />}
             </main>
 

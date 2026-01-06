@@ -20,12 +20,18 @@ interface CalendarDay {
     cycleDay?: number;
 }
 
-export default function Calendar() {
+interface CalendarProps {
+    onDateSelect?: (date: string) => void;
+}
+
+export default function Calendar({ onDateSelect }: CalendarProps) {
     const { t } = useTranslation();
     const [currentDate, setCurrentDate] = useState(new Date());
     const [cycles, setCycles] = useState<Cycle[]>([]);
     const [currentCycle, setCurrentCycle] = useState<Cycle | null>(null);
+    const [displayedCycle, setDisplayedCycle] = useState<Cycle | null>(null);
     const [entries, setEntries] = useState<DailyEntry[]>([]);
+    const [displayedEntries, setDisplayedEntries] = useState<DailyEntry[]>([]);
     const [calendarDays, setCalendarDays] = useState<CalendarDay[]>([]);
 
     const year = currentDate.getFullYear();
@@ -42,8 +48,12 @@ export default function Calendar() {
 
                 const current = await getCurrentCycle();
                 setCurrentCycle(current || null);
+                // Par défaut, afficher le cycle en cours
+                if (!displayedCycle) {
+                    setDisplayedCycle(current || null);
+                }
 
-                // Charger les entrées du cycle en cours
+                // Charger les entrées du cycle en cours pour le calendrier
                 if (current) {
                     const cycleEntries = await getEntriesByCycle(current.id);
                     setEntries(cycleEntries);
@@ -54,6 +64,35 @@ export default function Calendar() {
         }
         loadData();
     }, []);
+
+    // Charger les entrées du cycle affiché (pour le graphique)
+    useEffect(() => {
+        async function loadDisplayedEntries() {
+            if (displayedCycle) {
+                const CycleEntries = await getEntriesByCycle(displayedCycle.id);
+                setDisplayedEntries(CycleEntries);
+            } else {
+                setDisplayedEntries([]);
+            }
+        }
+        loadDisplayedEntries();
+    }, [displayedCycle]);
+
+    function goToPreviousCycle() {
+        if (!displayedCycle || cycles.length === 0) return;
+        const index = cycles.findIndex(c => c.id === displayedCycle.id);
+        if (index < cycles.length - 1) {
+            setDisplayedCycle(cycles[index + 1]);
+        }
+    }
+
+    function goToNextCycle() {
+        if (!displayedCycle || cycles.length === 0) return;
+        const index = cycles.findIndex(c => c.id === displayedCycle.id);
+        if (index > 0) {
+            setDisplayedCycle(cycles[index - 1]);
+        }
+    }
 
     // Générer les jours du calendrier
     useEffect(() => {
@@ -116,7 +155,11 @@ export default function Calendar() {
     }, [year, month, entries, currentCycle]);
 
     function formatDate(date: Date): string {
-        return date.toISOString().split('T')[0];
+        const d = new Date(date);
+        const year = d.getFullYear();
+        const month = String(d.getMonth() + 1).padStart(2, '0');
+        const day = String(d.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
     }
 
     function goToPreviousMonth() {
@@ -162,6 +205,8 @@ export default function Calendar() {
                     <div
                         key={i}
                         className={`calendar-day ${day.isCurrentMonth ? '' : 'other-month'} ${day.date === today ? 'today' : ''}`}
+                        onClick={() => onDateSelect?.(day.date)}
+                        style={{ cursor: 'pointer' }}
                     >
                         <span className="day-number">{day.dayOfMonth}</span>
                         {day.entry && (
@@ -185,13 +230,36 @@ export default function Calendar() {
             </div>
 
             {/* Temperature Chart - SVG dynamique scrollable */}
-            {entries.length > 0 && (
+            {displayedEntries.length > 0 && (
                 <div className="temp-chart card">
-                    <h3>{t('chart.title')}</h3>
+                    <div className="chart-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
+                        <button
+                            className="nav-btn"
+                            onClick={goToPreviousCycle}
+                            disabled={!displayedCycle || cycles.findIndex(c => c.id === displayedCycle.id) >= cycles.length - 1}
+                        >
+                            ‹
+                        </button>
+                        <h3>
+                            {t('chart.title')}
+                            {displayedCycle && (
+                                <span style={{ fontSize: '0.8em', fontWeight: 'normal', marginLeft: '10px' }}>
+                                    (Cycle du {new Date(displayedCycle.startDate).toLocaleDateString()})
+                                </span>
+                            )}
+                        </h3>
+                        <button
+                            className="nav-btn"
+                            onClick={goToNextCycle}
+                            disabled={!displayedCycle || cycles.findIndex(c => c.id === displayedCycle.id) <= 0}
+                        >
+                            ›
+                        </button>
+                    </div>
 
                     <div className="chart-scroll-container">
                         <svg
-                            width={Math.max(entries.length * 40, 350)}
+                            width={Math.max(displayedEntries.length * 40, 350)}
                             height="300"
                             className="chart-svg"
                         >
@@ -219,7 +287,7 @@ export default function Calendar() {
                             })}
 
                             {/* Grille verticale (Jours) */}
-                            {entries.map((entry, i) => {
+                            {displayedEntries.map((entry, i) => {
                                 const x = 60 + (i * 40);
                                 const isWeekend = new Date(entry.date).getDay() === 0 || new Date(entry.date).getDay() === 6;
                                 return (
@@ -245,7 +313,7 @@ export default function Calendar() {
 
                             {/* Courbe de température */}
                             <polyline
-                                points={entries
+                                points={displayedEntries
                                     .filter(e => e.temperature && !e.temperatureExcluded)
                                     .map((e, i) => {
                                         const x = 60 + (i * 40);
@@ -259,7 +327,7 @@ export default function Calendar() {
                             />
 
                             {/* Points de données */}
-                            {entries.map((entry, i) => {
+                            {displayedEntries.map((entry, i) => {
                                 if (!entry.temperature || entry.temperatureExcluded) return null;
                                 const x = 60 + (i * 40);
                                 const y = 280 - ((entry.temperature - 36.2) * 250);
@@ -275,7 +343,7 @@ export default function Calendar() {
                             })}
 
                             {/* Indicateurs Glaire (S/S+) et Saignements sous la courbe */}
-                            {entries.map((entry, i) => {
+                            {displayedEntries.map((entry, i) => {
                                 const x = 60 + (i * 40);
                                 return (
                                     <g key={`ind-${i}`}>

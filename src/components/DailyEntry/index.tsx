@@ -28,7 +28,11 @@ const MUCUS_OPTIONS: MucusCategory[] = ['d', 'ø', 'm', 'S', 'S+'];
 const BLEEDING_OPTIONS: BleedingIntensity[] = [0, 1, 2, 3];
 
 function formatDate(date: Date): string {
-    return date.toISOString().split('T')[0];
+    const d = new Date(date);
+    const year = d.getFullYear();
+    const month = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
 }
 
 function formatTimeForInput(date: Date): string {
@@ -37,11 +41,30 @@ function formatTimeForInput(date: Date): string {
     return `${hours}:${minutes}`;
 }
 
-export default function DailyEntry() {
+interface DailyEntryProps {
+    initialDate?: string;
+    onDateChange?: (date: string) => void;
+}
+
+export default function DailyEntry({ initialDate, onDateChange }: DailyEntryProps) {
     const { t, i18n } = useTranslation();
     const today = formatDate(new Date());
 
-    const [selectedDate, setSelectedDate] = useState(today);
+    const [selectedDate, setSelectedDate] = useState(initialDate || today);
+
+    // Sync internal state when prop changes
+    useEffect(() => {
+        if (initialDate) {
+            setSelectedDate(initialDate);
+        }
+    }, [initialDate]);
+
+    // Notify parent when date changes
+    const handleDateChange = (newDate: string) => {
+        setSelectedDate(newDate);
+        onDateChange?.(newDate);
+    };
+
     const [cycle, setCycle] = useState<Cycle | null>(null);
     const [profile, setProfile] = useState<UserProfile | null>(null);
     const [cycleEntries, setCycleEntries] = useState<DailyEntryType[]>([]);
