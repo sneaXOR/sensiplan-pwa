@@ -75,8 +75,11 @@
         "newConfirm": "Confirmer le début d'un nouveau cycle ?",
         "newHint": "Le jour 1 doit être le premier jour de saignement normal (pas spotting)",
         "day": "Jour",
+        "days": "jours",
         "length": "Durée du cycle",
-        "current": "Cycle en cours"
+        "current": "Cycle en cours",
+        "previous": "Cycles précédents",
+        "beforeCycleStart": "Avant le début du cycle"
     },
     "why": {
         "title": "Pourquoi ce statut ?",
@@ -167,6 +170,10 @@
     "errors": {
         "loadFailed": "Erreur lors du chargement des données",
         "saveFailed": "Erreur lors de l'enregistrement"
+    },
+    "toast": {
+        "saved": "Entrée enregistrée avec succès",
+        "error": "Impossible d'enregistrer l'entrée"
     },
     "warnings": {
         "longCycle": "Cycle très long détecté (>60 jours)",

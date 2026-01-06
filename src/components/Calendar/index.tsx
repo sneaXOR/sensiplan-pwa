@@ -11,6 +11,7 @@ import {
     getCurrentCycle,
 } from '../../storage/db';
 import type { Cycle, DailyEntry } from '@sensiplan/rule-engine';
+import { evaluateTemperatureShift } from '@sensiplan/rule-engine';
 
 interface CalendarDay {
     date: string;
@@ -311,6 +312,33 @@ export default function Calendar({ onDateSelect }: CalendarProps) {
                                 );
                             })}
 
+                            {/* Coverline (ligne de couverture) */}
+                            {(() => {
+                                const tempEval = evaluateTemperatureShift(displayedEntries);
+                                if (tempEval.coverLineTemp) {
+                                    const coverY = 280 - ((tempEval.coverLineTemp - 36.2) * 250);
+                                    const chartWidth = Math.max(displayedEntries.length * 40, 350);
+                                    return (
+                                        <g>
+                                            <line
+                                                x1="40"
+                                                y1={coverY}
+                                                x2={chartWidth}
+                                                y2={coverY}
+                                                stroke="#c94c4c"
+                                                strokeWidth="1.5"
+                                                strokeDasharray="6 3"
+                                                opacity="0.8"
+                                            />
+                                            <text x="42" y={coverY - 4} fontSize="9" fill="#c94c4c" fontWeight="500">
+                                                {t('chart.coverLine')}
+                                            </text>
+                                        </g>
+                                    );
+                                }
+                                return null;
+                            })()}
+
                             {/* Courbe de température */}
                             <polyline
                                 points={displayedEntries
@@ -395,11 +423,11 @@ export default function Calendar({ onDateSelect }: CalendarProps) {
                     <h3>{t('cycle.current')}</h3>
                     <p>
                         {t('cycle.length')}: {
-                            Math.floor(
+                            Math.max(1, Math.floor(
                                 (new Date().getTime() - new Date(currentCycle.startDate).getTime())
                                 / (1000 * 60 * 60 * 24)
-                            ) + 1
-                        } {t('cycle.day').toLowerCase()}s
+                            ) + 1)
+                        } {t('cycle.days')}
                     </p>
                 </div>
             )}
@@ -409,7 +437,7 @@ export default function Calendar({ onDateSelect }: CalendarProps) {
             {
                 cycles.length > 1 && (
                     <div className="previous-cycles">
-                        <h3>Cycles précédents</h3>
+                        <h3>{t('cycle.previous')}</h3>
                         <ul className="cycles-list">
                             {cycles.slice(1, 6).map((cycle) => (
                                 <li key={cycle.id} className="cycle-item">
@@ -419,10 +447,10 @@ export default function Calendar({ onDateSelect }: CalendarProps) {
                                     </span>
                                     {cycle.endDate && (
                                         <span className="cycle-length">
-                                            {Math.floor(
+                                            {Math.max(1, Math.floor(
                                                 (new Date(cycle.endDate).getTime() - new Date(cycle.startDate).getTime())
                                                 / (1000 * 60 * 60 * 24)
-                                            ) + 1} jours
+                                            ) + 1)} {t('cycle.days')}
                                         </span>
                                     )}
                                 </li>

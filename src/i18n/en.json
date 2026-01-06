@@ -75,8 +75,11 @@
         "newConfirm": "Confirm start of a new cycle?",
         "newHint": "Day 1 should be the first day of normal bleeding (not spotting)",
         "day": "Day",
+        "days": "days",
         "length": "Cycle length",
-        "current": "Current cycle"
+        "current": "Current cycle",
+        "previous": "Previous cycles",
+        "beforeCycleStart": "Before cycle start"
     },
     "why": {
         "title": "Why this status?",
@@ -167,6 +170,10 @@
     "errors": {
         "loadFailed": "Error loading data",
         "saveFailed": "Error saving data"
+    },
+    "toast": {
+        "saved": "Entry saved successfully",
+        "error": "Could not save entry"
     },
     "warnings": {
         "longCycle": "Very long cycle detected (>60 days)",

@@ -176,7 +176,8 @@ export function calculateCycleDay(cycleStartDate: string, date: string): number 
     const current = new Date(date);
     const diffTime = current.getTime() - start.getTime();
     const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-    return diffDays + 1; // 1-indexed
+    const cycleDay = diffDays + 1; // 1-indexed
+    return cycleDay > 0 ? cycleDay : 0; // Prevent negative cycle days
 }
 
 // ============================================================================

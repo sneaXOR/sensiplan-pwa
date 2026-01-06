@@ -5,6 +5,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import './DailyEntry.css';
+import Toast from '../Toast';
 import {
     db,
     getCurrentCycle,
@@ -85,6 +86,7 @@ export default function DailyEntry({ initialDate, onDateChange }: DailyEntryProp
     const [saved, setSaved] = useState(false);
     const [showNewCycleModal, setShowNewCycleModal] = useState(false);
     const [showWhyModal, setShowWhyModal] = useState(false);
+    const [showToast, setShowToast] = useState(false);
 
     // Charger les données
     const loadData = useCallback(async () => {
@@ -174,6 +176,7 @@ export default function DailyEntry({ initialDate, onDateChange }: DailyEntryProp
 
             await saveEntry(entry);
             setSaved(true);
+            setShowToast(true);
 
             // Recharger pour mettre à jour le statut
             await loadData();
@@ -210,7 +213,10 @@ export default function DailyEntry({ initialDate, onDateChange }: DailyEntryProp
                 />
                 {cycle && (
                     <span className="cycle-day">
-                        {t('entry.cycleDay', { day: cycleDay })}
+                        {cycleDay > 0
+                            ? t('entry.cycleDay', { day: cycleDay })
+                            : t('cycle.beforeCycleStart')
+                        }
                     </span>
                 )}
             </div>
@@ -465,6 +471,15 @@ export default function DailyEntry({ initialDate, onDateChange }: DailyEntryProp
                         </button>
                     </div>
                 </div>
+            )}
+
+            {/* Toast Notification */}
+            {showToast && (
+                <Toast
+                    message={t('toast.saved')}
+                    type="success"
+                    onClose={() => setShowToast(false)}
+                />
             )}
         </div>
     );
