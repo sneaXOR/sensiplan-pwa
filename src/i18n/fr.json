@@ -1,0 +1,155 @@
+{
+    "app": {
+        "title": "SensiPlan",
+        "tagline": "Suivi de fertilité"
+    },
+    "nav": {
+        "today": "Aujourd'hui",
+        "calendar": "Calendrier",
+        "chart": "Graphique",
+        "settings": "Paramètres"
+    },
+    "status": {
+        "fertile": "Fertile",
+        "infertile": "Infertile",
+        "indeterminate": "Indéterminé",
+        "preOvulation": "Avant ovulation",
+        "postOvulation": "Après ovulation"
+    },
+    "entry": {
+        "title": "Saisie du jour",
+        "cycleDay": "Jour {{day}}",
+        "temperature": "Température",
+        "temperaturePlaceholder": "36.50",
+        "temperatureHelp": "Prenez votre température chaque matin au réveil, AVANT de vous lever. Utilisez toujours la même méthode (orale, rectale, vaginale).",
+        "time": "Heure",
+        "disturbance": "Perturbation",
+        "disturbanceHint": "Alcool, sommeil perturbé, maladie...",
+        "excludedHelp": "Cochez si la mesure est inhabituelle (fièvre, alcool, nuit agitée). Elle ne sera pas utilisée pour le calcul.",
+        "excluded": "Exclure cette mesure",
+        "mucus": "Glaire cervicale",
+        "mucusHelp": "Observez la sensation et l'apparence à l'entrée du vagin. Notez la meilleure qualité de la journée.",
+        "mucusCategories": {
+            "d": "Sec",
+            "ø": "Rien",
+            "m": "Humide",
+            "S": "Glaire",
+            "S+": "Glaire +"
+        },
+        "mucusDescriptions": {
+            "d": "Sensation sèche, aucune humidité visible",
+            "ø": "Rien de perceptible, ni sec ni humide",
+            "m": "Sensation humide ou légère humidité",
+            "S": "Glaire visible, étirable, comme blanc d'œuf cru",
+            "S+": "Glaire très filante, transparente, très étirable"
+        },
+        "bleeding": "Saignements",
+        "bleedingHelp": "Le jour 1 du cycle = premier jour de saignement normal. Le spotting ne compte pas comme jour 1.",
+        "bleedingLevels": {
+            "none": "Aucun",
+            "spotting": "Spotting",
+            "normal": "Normal",
+            "heavy": "Abondant"
+        },
+        "bleedingDescriptions": {
+            "none": "Pas de sang visible",
+            "spotting": "Légères traces, taches rosées ou brunes",
+            "normal": "Saignement habituel de règles",
+            "heavy": "Saignement plus abondant que d'habitude"
+        },
+        "cervix": "Col (optionnel)",
+        "cervixPosition": "Position",
+        "cervixOpening": "Ouverture",
+        "cervixFirmness": "Fermeté",
+        "symptoms": "Symptômes (informatif)",
+        "symptomsHelp": "Ces informations sont pour votre référence, elles n'affectent pas le calcul de fertilité.",
+        "mittelschmerz": "Douleur mi-cycle",
+        "breastSymptoms": "Symptômes mammaires",
+        "notes": "Notes",
+        "notesPlaceholder": "Notes personnelles...",
+        "save": "Enregistrer",
+        "saved": "Enregistré ✓"
+    },
+    "cycle": {
+        "new": "Nouveau cycle",
+        "newConfirm": "Confirmer le début d'un nouveau cycle ?",
+        "newHint": "Le jour 1 doit être le premier jour de saignement normal (pas spotting)",
+        "day": "Jour",
+        "length": "Durée du cycle",
+        "current": "Cycle en cours"
+    },
+    "why": {
+        "title": "Pourquoi ce statut ?",
+        "rulesApplied": "Règles appliquées",
+        "dataUsed": "Données utilisées",
+        "warnings": "Avertissements"
+    },
+    "settings": {
+        "title": "Paramètres",
+        "language": "Langue",
+        "temperatureMethod": "Méthode de mesure",
+        "oral": "Orale",
+        "rectal": "Rectale",
+        "vaginal": "Vaginale",
+        "useCervix": "Utiliser le col au lieu de la glaire",
+        "data": "Données",
+        "export": "Exporter les données",
+        "exportEncrypted": "Exporter (chiffré)",
+        "import": "Importer des données",
+        "deleteAll": "Supprimer toutes les données",
+        "deleteConfirm": "Êtes-vous sûre de vouloir supprimer toutes les données ? Cette action est irréversible.",
+        "about": "À propos",
+        "version": "Version"
+    },
+    "calendar": {
+        "title": "Calendrier",
+        "today": "Aujourd'hui",
+        "monthNames": [
+            "Janvier",
+            "Février",
+            "Mars",
+            "Avril",
+            "Mai",
+            "Juin",
+            "Juillet",
+            "Août",
+            "Septembre",
+            "Octobre",
+            "Novembre",
+            "Décembre"
+        ],
+        "dayNames": [
+            "D",
+            "L",
+            "M",
+            "M",
+            "J",
+            "V",
+            "S"
+        ]
+    },
+    "chart": {
+        "title": "Graphique du cycle",
+        "temperature": "Température (°C)",
+        "coverLine": "Ligne de couverture",
+        "peak": "Pic de glaire (P)",
+        "postPeak": "P+{{n}}"
+    },
+    "common": {
+        "cancel": "Annuler",
+        "confirm": "Confirmer",
+        "close": "Fermer",
+        "loading": "Chargement...",
+        "error": "Erreur"
+    },
+    "errors": {
+        "loadFailed": "Erreur lors du chargement des données",
+        "saveFailed": "Erreur lors de l'enregistrement"
+    },
+    "warnings": {
+        "longCycle": "Cycle très long détecté (>60 jours)",
+        "amenorrhea": "Pas de règles depuis plus de 90 jours - consultation recommandée",
+        "peakReturned": "Retour à qualité de glaire élevée - comptage recommencé",
+        "noTempShift": "Pas de décalage de température confirmé"
+    }
+}

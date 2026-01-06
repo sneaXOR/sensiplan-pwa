@@ -1,0 +1,278 @@
+/* Calendar Component Styles */
+
+.calendar {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.calendar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.nav-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--color-surface);
+    font-size: var(--font-size-xl);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow-sm);
+}
+
+.nav-btn:hover {
+    background-color: var(--color-background);
+}
+
+.month-year {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.month-name {
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+}
+
+.year {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+}
+
+.today-btn {
+    align-self: center;
+    padding: var(--spacing-xs) var(--spacing-md);
+    border-radius: var(--border-radius-md);
+    background-color: var(--color-primary);
+    color: white;
+    font-size: var(--font-size-sm);
+}
+
+/* Calendar Grid */
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 2px;
+}
+
+.day-names {
+    margin-bottom: var(--spacing-sm);
+}
+
+.day-name {
+    text-align: center;
+    font-weight: 600;
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-sm);
+    padding: var(--spacing-xs);
+}
+
+.calendar-day {
+    aspect-ratio: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 4px;
+    background-color: var(--color-surface);
+    border-radius: var(--border-radius-sm);
+    position: relative;
+    min-height: 50px;
+}
+
+.calendar-day.other-month {
+    background-color: transparent;
+    opacity: 0.4;
+}
+
+.calendar-day.today {
+    background-color: rgba(74, 124, 89, 0.1);
+    border: 2px solid var(--color-primary);
+}
+
+.day-number {
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+}
+
+.day-indicators {
+    display: flex;
+    gap: 2px;
+    margin-top: 2px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.indicator {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+}
+
+.indicator.bleeding-1 {
+    background-color: var(--color-bleeding-spotting);
+}
+
+.indicator.bleeding-2 {
+    background-color: var(--color-bleeding-normal);
+}
+
+.indicator.bleeding-3 {
+    background-color: var(--color-bleeding-heavy);
+}
+
+.indicator.mucus-d {
+    background-color: var(--color-mucus-d);
+}
+
+.indicator.mucus-ø {
+    background-color: var(--color-mucus-0);
+}
+
+.indicator.mucus-m {
+    background-color: var(--color-mucus-m);
+}
+
+.indicator.mucus-S {
+    background-color: var(--color-mucus-s);
+}
+
+.indicator.mucus-Splus {
+    background-color: var(--color-mucus-splus);
+}
+
+.indicator.temp {
+    background-color: var(--color-primary);
+    width: 6px;
+    height: 6px;
+}
+
+.cycle-day-label {
+    position: absolute;
+    bottom: 2px;
+    font-size: 9px;
+    color: var(--color-text-secondary);
+}
+
+/* Cycle Info */
+.cycle-info {
+    margin-top: var(--spacing-md);
+}
+
+.cycle-info h3 {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-sm);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.cycle-info p {
+    margin: 0;
+    font-weight: 500;
+}
+
+/* Previous Cycles */
+.previous-cycles {
+    margin-top: var(--spacing-lg);
+}
+
+.previous-cycles h3 {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-sm);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.cycles-list {
+    list-style: none;
+    padding: 0;
+}
+
+.cycle-item {
+    display: flex;
+    justify-content: space-between;
+    padding: var(--spacing-sm);
+    background-color: var(--color-surface);
+    border-radius: var(--border-radius-md);
+    margin-bottom: var(--spacing-xs);
+}
+
+.cycle-dates {
+    font-size: var(--font-size-sm);
+}
+
+.cycle-length {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+}
+
+/* Temperature Chart */
+.temp-chart {
+    margin-top: var(--spacing-md);
+    padding: var(--spacing-sm);
+}
+
+.temp-chart h3 {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-sm);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.chart-svg {
+    width: 100%;
+    height: auto;
+    max-height: 180px;
+}
+
+.mucus-legend {
+    display: flex;
+    gap: 2px;
+    margin-top: var(--spacing-xs);
+    padding: var(--spacing-xs) 0;
+    overflow-x: auto;
+    font-size: 10px;
+}
+
+.mucus-mark {
+    min-width: 18px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 2px;
+    font-weight: 600;
+}
+
+.mucus-mark.mucus-d {
+    background: var(--color-mucus-d);
+    color: #666;
+}
+
+.mucus-mark.mucus-ø {
+    background: var(--color-mucus-0);
+    color: #666;
+}
+
+.mucus-mark.mucus-m {
+    background: var(--color-mucus-m);
+    color: #333;
+}
+
+.mucus-mark.mucus-S {
+    background: var(--color-mucus-s);
+    color: white;
+}
+
+.mucus-mark.mucus-Splus {
+    background: var(--color-mucus-splus);
+    color: white;
+}

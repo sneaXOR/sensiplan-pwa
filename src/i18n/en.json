@@ -1,0 +1,155 @@
+{
+    "app": {
+        "title": "SensiPlan",
+        "tagline": "Fertility Tracking"
+    },
+    "nav": {
+        "today": "Today",
+        "calendar": "Calendar",
+        "chart": "Chart",
+        "settings": "Settings"
+    },
+    "status": {
+        "fertile": "Fertile",
+        "infertile": "Infertile",
+        "indeterminate": "Indeterminate",
+        "preOvulation": "Pre-ovulation",
+        "postOvulation": "Post-ovulation"
+    },
+    "entry": {
+        "title": "Daily Entry",
+        "cycleDay": "Day {{day}}",
+        "temperature": "Temperature",
+        "temperaturePlaceholder": "36.50",
+        "temperatureHelp": "Take your temperature every morning upon waking, BEFORE getting up. Always use the same method (oral, rectal, vaginal).",
+        "time": "Time",
+        "disturbance": "Disturbance",
+        "disturbanceHint": "Alcohol, poor sleep, illness...",
+        "excludedHelp": "Check if the reading is unusual (fever, alcohol, restless night). It won't be used in calculations.",
+        "excluded": "Exclude this reading",
+        "mucus": "Cervical Mucus",
+        "mucusHelp": "Observe the sensation and appearance at the vaginal opening. Record the best quality of the day.",
+        "mucusCategories": {
+            "d": "Dry",
+            "ø": "Nothing",
+            "m": "Moist",
+            "S": "Mucus",
+            "S+": "Mucus +"
+        },
+        "mucusDescriptions": {
+            "d": "Dry sensation, no visible moisture",
+            "ø": "Nothing noticeable, neither dry nor wet",
+            "m": "Moist sensation or slight moisture",
+            "S": "Visible mucus, stretchy, like raw egg white",
+            "S+": "Very stretchy, transparent, highly elastic mucus"
+        },
+        "bleeding": "Bleeding",
+        "bleedingHelp": "Day 1 of cycle = first day of normal bleeding. Spotting doesn't count as day 1.",
+        "bleedingLevels": {
+            "none": "None",
+            "spotting": "Spotting",
+            "normal": "Normal",
+            "heavy": "Heavy"
+        },
+        "bleedingDescriptions": {
+            "none": "No visible blood",
+            "spotting": "Light traces, pink or brown spots",
+            "normal": "Usual menstrual bleeding",
+            "heavy": "Heavier than usual bleeding"
+        },
+        "cervix": "Cervix (optional)",
+        "cervixPosition": "Position",
+        "cervixOpening": "Opening",
+        "cervixFirmness": "Firmness",
+        "symptoms": "Symptoms (informational)",
+        "symptomsHelp": "This information is for your reference, it doesn't affect fertility calculation.",
+        "mittelschmerz": "Mid-cycle pain",
+        "breastSymptoms": "Breast symptoms",
+        "notes": "Notes",
+        "notesPlaceholder": "Personal notes...",
+        "save": "Save",
+        "saved": "Saved ✓"
+    },
+    "cycle": {
+        "new": "New Cycle",
+        "newConfirm": "Confirm start of a new cycle?",
+        "newHint": "Day 1 should be the first day of normal bleeding (not spotting)",
+        "day": "Day",
+        "length": "Cycle length",
+        "current": "Current cycle"
+    },
+    "why": {
+        "title": "Why this status?",
+        "rulesApplied": "Rules applied",
+        "dataUsed": "Data used",
+        "warnings": "Warnings"
+    },
+    "settings": {
+        "title": "Settings",
+        "language": "Language",
+        "temperatureMethod": "Measurement method",
+        "oral": "Oral",
+        "rectal": "Rectal",
+        "vaginal": "Vaginal",
+        "useCervix": "Use cervix instead of mucus",
+        "data": "Data",
+        "export": "Export data",
+        "exportEncrypted": "Export (encrypted)",
+        "import": "Import data",
+        "deleteAll": "Delete all data",
+        "deleteConfirm": "Are you sure you want to delete all data? This action cannot be undone.",
+        "about": "About",
+        "version": "Version"
+    },
+    "calendar": {
+        "title": "Calendar",
+        "today": "Today",
+        "monthNames": [
+            "January",
+            "February",
+            "March",
+            "April",
+            "May",
+            "June",
+            "July",
+            "August",
+            "September",
+            "October",
+            "November",
+            "December"
+        ],
+        "dayNames": [
+            "S",
+            "M",
+            "T",
+            "W",
+            "T",
+            "F",
+            "S"
+        ]
+    },
+    "chart": {
+        "title": "Cycle Chart",
+        "temperature": "Temperature (°C)",
+        "coverLine": "Cover line",
+        "peak": "Mucus Peak (P)",
+        "postPeak": "P+{{n}}"
+    },
+    "common": {
+        "cancel": "Cancel",
+        "confirm": "Confirm",
+        "close": "Close",
+        "loading": "Loading...",
+        "error": "Error"
+    },
+    "errors": {
+        "loadFailed": "Error loading data",
+        "saveFailed": "Error saving data"
+    },
+    "warnings": {
+        "longCycle": "Very long cycle detected (>60 days)",
+        "amenorrhea": "No period for more than 90 days - consultation recommended",
+        "peakReturned": "Return to high mucus quality - count restarted",
+        "noTempShift": "No confirmed temperature shift"
+    }
+}

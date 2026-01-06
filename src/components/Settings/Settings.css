@@ -1,0 +1,125 @@
+/* Settings Component Styles */
+
+.settings {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+}
+
+.settings h2 {
+    margin-bottom: var(--spacing-sm);
+}
+
+.settings-section {
+    background-color: var(--color-surface);
+    border-radius: var(--border-radius-lg);
+    padding: var(--spacing-md);
+}
+
+.settings-section>label:first-child,
+.settings-section h3 {
+    display: block;
+    font-weight: 600;
+    margin-bottom: var(--spacing-sm);
+    color: var(--color-text);
+}
+
+.settings-section h3 {
+    font-size: var(--font-size-sm);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--color-text-secondary);
+}
+
+/* Language Options */
+.language-options {
+    display: flex;
+    gap: var(--spacing-sm);
+}
+
+.lang-option {
+    flex: 1;
+    padding: var(--spacing-md);
+    border-radius: var(--border-radius-md);
+    border: 2px solid var(--color-border);
+    background-color: var(--color-background);
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.lang-option.selected {
+    border-color: var(--color-primary);
+    background-color: rgba(74, 124, 89, 0.1);
+}
+
+/* Method Options */
+.method-options {
+    display: flex;
+    gap: var(--spacing-sm);
+}
+
+.method-option {
+    flex: 1;
+    padding: var(--spacing-sm);
+    border-radius: var(--border-radius-md);
+    border: 2px solid var(--color-border);
+    background-color: var(--color-background);
+    font-size: var(--font-size-sm);
+    transition: all 0.2s ease;
+}
+
+.method-option.selected {
+    border-color: var(--color-primary);
+    background-color: rgba(74, 124, 89, 0.1);
+}
+
+/* Data Actions */
+.data-actions {
+    display: flex;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-md);
+}
+
+.data-actions .btn {
+    flex: 1;
+}
+
+.import-btn {
+    cursor: pointer;
+    text-align: center;
+}
+
+.delete-btn {
+    width: 100%;
+}
+
+.btn-danger {
+    background-color: var(--color-fertile);
+    color: white;
+}
+
+.btn-danger:hover {
+    background-color: #a83c3c;
+}
+
+/* About Section */
+.about {
+    text-align: center;
+}
+
+.version {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-sm);
+}
+
+.credits {
+    font-size: var(--font-size-xs);
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+}
+
+/* Checkbox in Settings */
+.settings-section .checkbox-label {
+    font-weight: normal;
+}

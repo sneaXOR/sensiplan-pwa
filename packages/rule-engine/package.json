@@ -1,0 +1,20 @@
+{
+  "name": "@sensiplan/rule-engine",
+  "version": "1.0.0",
+  "description": "Moteur de règles SensiPlan - Calcul déterministe du statut de fertilité",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsup src/index.ts --format cjs,esm --dts",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "devDependencies": {
+    "tsup": "^8.0.0",
+    "typescript": "^5.3.0",
+    "vitest": "^1.0.0"
+  },
+  "keywords": ["sensiplan", "fertility", "nfp", "sympto-thermal"],
+  "license": "MIT"
+}
