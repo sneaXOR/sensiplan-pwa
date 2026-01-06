@@ -184,104 +184,139 @@ export default function Calendar() {
                 ))}
             </div>
 
-            {/* Temperature Chart - SVG léger */}
+            {/* Temperature Chart - SVG dynamique scrollable */}
             {entries.length > 0 && (
                 <div className="temp-chart card">
                     <h3>{t('chart.title')}</h3>
-                    <svg
-                        viewBox="0 0 320 160"
-                        className="chart-svg"
-                        preserveAspectRatio="xMidYMid meet"
-                    >
-                        {/* Grille horizontale */}
-                        {[36.2, 36.4, 36.6, 36.8, 37.0, 37.2].map((temp, i) => (
-                            <g key={temp}>
-                                <line
-                                    x1="30"
-                                    y1={140 - i * 24}
-                                    x2="310"
-                                    y2={140 - i * 24}
-                                    stroke="#e0e0e0"
-                                    strokeWidth="1"
-                                />
-                                <text
-                                    x="25"
-                                    y={144 - i * 24}
-                                    fontSize="8"
-                                    fill="#666"
-                                    textAnchor="end"
-                                >
-                                    {temp.toFixed(1)}
-                                </text>
-                            </g>
-                        ))}
 
-                        {/* Courbe de température */}
-                        <polyline
-                            fill="none"
-                            stroke="var(--color-primary)"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            points={entries
-                                .filter(e => e.temperature && !e.temperatureExcluded)
-                                .map(e => {
-                                    const x = 30 + (e.cycleDay - 1) * 10;
-                                    const y = 140 - ((e.temperature! - 36.2) / 1.0) * 120;
-                                    return `${Math.min(310, x)},${Math.max(20, Math.min(140, y))}`;
-                                })
-                                .join(' ')}
-                        />
+                    <div className="chart-scroll-container">
+                        <svg
+                            width={Math.max(entries.length * 40, 350)}
+                            height="300"
+                            className="chart-svg"
+                        >
+                            {/* Fond et Grille */}
+                            <rect x="0" y="0" width="100%" height="300" fill="#f8f9fa" />
 
-                        {/* Points de température */}
-                        {entries
-                            .filter(e => e.temperature)
-                            .map(e => {
-                                const x = 30 + (e.cycleDay - 1) * 10;
-                                const y = 140 - ((e.temperature! - 36.2) / 1.0) * 120;
+                            {/* Grille horizontale (Températures) */}
+                            {[36.2, 36.3, 36.4, 36.5, 36.6, 36.7, 36.8, 36.9, 37.0, 37.1, 37.2].map((temp, i) => {
+                                const y = 280 - ((temp - 36.2) * 250); // Échelle augmentée
+                                return (
+                                    <g key={temp}>
+                                        <line
+                                            x1="40"
+                                            y1={y}
+                                            x2="100%"
+                                            y2={y}
+                                            stroke={i % 5 === 0 ? "#ccc" : "#eee"}
+                                            strokeWidth="1"
+                                        />
+                                        <text x="5" y={y + 4} fontSize="10" fill="#666">
+                                            {temp.toFixed(1)}
+                                        </text>
+                                    </g>
+                                );
+                            })}
+
+                            {/* Grille verticale (Jours) */}
+                            {entries.map((entry, i) => {
+                                const x = 60 + (i * 40);
+                                const isWeekend = new Date(entry.date).getDay() === 0 || new Date(entry.date).getDay() === 6;
+                                return (
+                                    <g key={entry.date}>
+                                        <line
+                                            x1={x}
+                                            y1="0"
+                                            x2={x}
+                                            y2="280"
+                                            stroke="#eee"
+                                            strokeDasharray="4 4"
+                                        />
+                                        {/* Fond jour weekend */}
+                                        {isWeekend && (
+                                            <rect x={x - 20} y="0" width="40" height="280" fill="rgba(0,0,0,0.02)" />
+                                        )}
+                                        <text x={x} y="295" fontSize="10" textAnchor="middle" fill="#666">
+                                            {entry.cycleDay}
+                                        </text>
+                                    </g>
+                                );
+                            })}
+
+                            {/* Courbe de température */}
+                            <polyline
+                                points={entries
+                                    .filter(e => e.temperature && !e.temperatureExcluded)
+                                    .map((e, i) => {
+                                        const x = 60 + (i * 40);
+                                        const y = 280 - ((e.temperature! - 36.2) * 250);
+                                        return `${x},${y}`;
+                                    })
+                                    .join(' ')}
+                                fill="none"
+                                stroke="#4a7c59"
+                                strokeWidth="2"
+                            />
+
+                            {/* Points de données */}
+                            {entries.map((entry, i) => {
+                                if (!entry.temperature || entry.temperatureExcluded) return null;
+                                const x = 60 + (i * 40);
+                                const y = 280 - ((entry.temperature - 36.2) * 250);
                                 return (
                                     <circle
-                                        key={e.cycleDay}
-                                        cx={Math.min(310, x)}
-                                        cy={Math.max(20, Math.min(140, y))}
-                                        r={e.temperatureExcluded ? 3 : 4}
-                                        fill={e.temperatureExcluded ? '#999' : 'var(--color-primary)'}
-                                        stroke="white"
-                                        strokeWidth="1"
+                                        key={i}
+                                        cx={x}
+                                        cy={y}
+                                        r="4"
+                                        fill="#4a7c59"
                                     />
                                 );
                             })}
 
-                        {/* Labels jours du cycle */}
-                        {[1, 5, 10, 15, 20, 25, 28].map(d => {
-                            const x = 30 + (d - 1) * 10;
-                            if (x > 310) return null;
-                            return (
-                                <text
-                                    key={d}
-                                    x={x}
-                                    y="155"
-                                    fontSize="8"
-                                    fill="#666"
-                                    textAnchor="middle"
-                                >
-                                    {d}
-                                </text>
-                            );
-                        })}
-                    </svg>
+                            {/* Indicateurs Glaire (S/S+) et Saignements sous la courbe */}
+                            {entries.map((entry, i) => {
+                                const x = 60 + (i * 40);
+                                return (
+                                    <g key={`ind-${i}`}>
+                                        {/* Saignements */}
+                                        {entry.bleedingIntensity ? (
+                                            <circle cx={x} cy="270" r="3" fill="#e74c3c" />
+                                        ) : null}
 
-                    {/* Légende glaire sous le graphique */}
-                    <div className="mucus-legend">
-                        {entries.filter(e => e.mucusObservation).slice(0, 28).map(e => (
-                            <span
-                                key={e.cycleDay}
-                                className={`mucus-mark mucus-${e.mucusObservation?.replace('+', 'plus')}`}
-                                title={`J${e.cycleDay}: ${e.mucusObservation}`}
-                            >
-                                {e.mucusObservation}
-                            </span>
-                        ))}
+                                        {/* Glaire fertile (S, S+) */}
+                                        {(entry.mucusObservation === 'S' || entry.mucusObservation === 'S+') && (
+                                            <circle cx={x} cy="260" r="3" fill="#3498db" />
+                                        )}
+
+                                        {/* Glaire infertile (d, ø, m) */}
+                                        {(entry.mucusObservation === 'd' || entry.mucusObservation === 'm' || entry.mucusObservation === 'ø') && (
+                                            <circle cx={x} cy="260" r="3" fill="#95a5a6" />
+                                        )}
+                                    </g>
+                                );
+                            })}
+                        </svg>
+                    </div>
+
+                    {/* Légende */}
+                    <div className="chart-legend">
+                        <div className="legend-item">
+                            <span className="legend-color temp-color"></span>
+                            <span>{t('chart.legend.temperature')}</span>
+                        </div>
+                        <div className="legend-item">
+                            <span className="legend-color mucus-fertile-color"></span>
+                            <span>{t('chart.legend.fertile')}</span>
+                        </div>
+                        <div className="legend-item">
+                            <span className="legend-color mucus-infertile-color"></span>
+                            <span>{t('chart.legend.mucus')}</span>
+                        </div>
+                        <div className="legend-item">
+                            <span className="legend-color bleeding-color"></span>
+                            <span>{t('chart.legend.bleeding')}</span>
+                        </div>
                     </div>
                 </div>
             )}
@@ -301,30 +336,33 @@ export default function Calendar() {
                 </div>
             )}
 
+
             {/* Previous Cycles */}
-            {cycles.length > 1 && (
-                <div className="previous-cycles">
-                    <h3>Cycles précédents</h3>
-                    <ul className="cycles-list">
-                        {cycles.slice(1, 6).map((cycle) => (
-                            <li key={cycle.id} className="cycle-item">
-                                <span className="cycle-dates">
-                                    {new Date(cycle.startDate).toLocaleDateString()}
-                                    {cycle.endDate && ` → ${new Date(cycle.endDate).toLocaleDateString()}`}
-                                </span>
-                                {cycle.endDate && (
-                                    <span className="cycle-length">
-                                        {Math.floor(
-                                            (new Date(cycle.endDate).getTime() - new Date(cycle.startDate).getTime())
-                                            / (1000 * 60 * 60 * 24)
-                                        ) + 1} jours
+            {
+                cycles.length > 1 && (
+                    <div className="previous-cycles">
+                        <h3>Cycles précédents</h3>
+                        <ul className="cycles-list">
+                            {cycles.slice(1, 6).map((cycle) => (
+                                <li key={cycle.id} className="cycle-item">
+                                    <span className="cycle-dates">
+                                        {new Date(cycle.startDate).toLocaleDateString()}
+                                        {cycle.endDate && ` → ${new Date(cycle.endDate).toLocaleDateString()}`}
                                     </span>
-                                )}
-                            </li>
-                        ))}
-                    </ul>
-                </div>
-            )}
-        </div>
+                                    {cycle.endDate && (
+                                        <span className="cycle-length">
+                                            {Math.floor(
+                                                (new Date(cycle.endDate).getTime() - new Date(cycle.startDate).getTime())
+                                                / (1000 * 60 * 60 * 24)
+                                            ) + 1} jours
+                                        </span>
+                                    )}
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                )
+            }
+        </div >
     );
 }

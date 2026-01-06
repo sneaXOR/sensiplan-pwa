@@ -80,9 +80,25 @@
     },
     "why": {
         "title": "Pourquoi ce statut ?",
-        "rulesApplied": "Règles appliquées",
+        "rulesApplied": "Comment c'est calculé",
         "dataUsed": "Données utilisées",
-        "warnings": "Avertissements"
+        "warnings": "Points d'attention"
+    },
+    "rules": {
+        "fiveDay": "Les 5 premiers jours du cycle sont considérés infertiles (si cycles réguliers d'au moins 26 jours)",
+        "minus8": "Début de fertilité = jour du cycle le plus précoce où une température haute a été observée - 8 jours",
+        "minus20": "Début de fertilité = durée du cycle le plus court - 20 jours",
+        "tempShift": "3 températures consécutives au-dessus de la ligne de couverture confirment l'ovulation",
+        "mucusPeak": "Le pic de glaire (dernière observation de qualité haute) marque l'ovulation",
+        "doubleCheck": "L'infertilité post-ovulatoire commence quand température ET glaire confirment (le plus tardif)",
+        "exception1": "Exception : 4ème température nécessaire si la 3ème n'est pas assez haute",
+        "exception2": "Exception : température perturbée = 4 températures hautes requises"
+    },
+    "status": {
+        "noDataYet": "Saisissez vos observations pour obtenir votre statut de fertilité",
+        "fertile": "Fertile",
+        "infertile": "Infertile",
+        "indeterminate": "En observation"
     },
     "settings": {
         "title": "Paramètres",
@@ -130,6 +146,12 @@
     },
     "chart": {
         "title": "Graphique du cycle",
+        "legend": {
+            "temperature": "Température",
+            "mucus": "Glaire (d, ø, m)",
+            "fertile": "Glaire fertile (S, S+)",
+            "bleeding": "Saignements"
+        },
         "temperature": "Température (°C)",
         "coverLine": "Ligne de couverture",
         "peak": "Pic de glaire (P)",

@@ -227,10 +227,68 @@
     letter-spacing: 0.5px;
 }
 
-.chart-svg {
+.chart-scroll-container {
     width: 100%;
-    height: auto;
-    max-height: 180px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    /* Smooth scroll mobile */
+    margin-bottom: 1rem;
+    border: 1px solid #f0f0f0;
+    border-radius: 8px;
+    background-color: #f8f9fa;
+}
+
+.chart-svg {
+    display: block;
+    /* Évite espace fantôme */
+    min-width: 100%;
+    /* Hauteur gérée par attribut height du SVG */
+}
+
+.chart-svg text {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    user-select: none;
+}
+
+/* Legend */
+.chart-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+    padding-top: 0.5rem;
+    border-top: 1px solid #eee;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--color-text-secondary);
+}
+
+.legend-color {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.temp-color {
+    background-color: var(--color-primary);
+}
+
+.mucus-fertile-color {
+    background-color: #3498db;
+}
+
+.mucus-infertile-color {
+    background-color: #95a5a6;
+}
+
+.bleeding-color {
+    background-color: #e74c3c;
 }
 
 .mucus-legend {

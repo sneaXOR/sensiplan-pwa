@@ -98,11 +98,14 @@ export default function DailyEntry() {
                     setNotes('');
                 }
 
-                // Calculer le statut de fertilité
-                if (p) {
+                // Calculer le statut de fertilité seulement si des données existent
+                if (p && entries.length >= 1) {
                     const cycleDay = calculateCycleDay(currentCycle.startDate, selectedDate);
                     const status = calculateFertilityStatus(entries, cycleDay, currentCycle, p);
                     setFertilityStatus(status);
+                } else {
+                    // Pas assez de données
+                    setFertilityStatus(null);
                 }
             }
         } catch (error) {
@@ -190,6 +193,11 @@ export default function DailyEntry() {
             </div>
 
             {/* Fertility Status */}
+            {cycle && !fertilityStatus && (
+                <div className="status-card status-info">
+                    <p className="status-help">{t('status.noDataYet')}</p>
+                </div>
+            )}
             {fertilityStatus && (
                 <div className={`status-card status-${fertilityStatus.status}`}>
                     <div className="status-main">
@@ -395,14 +403,23 @@ export default function DailyEntry() {
                         <div className="why-section">
                             <h3>{t('why.rulesApplied')}</h3>
                             <ul>
-                                {fertilityStatus.rulesApplied.map((rule, i) => (
-                                    <li key={i}>
-                                        {rule.ruleName}
-                                        <small className="rule-source">
-                                            (doc.txt:{rule.sourceLineStart}-{rule.sourceLineEnd})
-                                        </small>
-                                    </li>
-                                ))}
+                                {fertilityStatus.rulesApplied.map((rule, i) => {
+                                    // Mapper les ruleId vers les clés de traduction
+                                    const ruleKey = rule.ruleId.includes('FIVE') ? 'fiveDay' :
+                                        rule.ruleId.includes('MINUS_8') ? 'minus8' :
+                                            rule.ruleId.includes('MINUS_20') ? 'minus20' :
+                                                rule.ruleId.includes('TEMP') && rule.ruleId.includes('MAIN') ? 'tempShift' :
+                                                    rule.ruleId.includes('EXCEPT') && rule.ruleId.includes('1') ? 'exception1' :
+                                                        rule.ruleId.includes('EXCEPT') && rule.ruleId.includes('2') ? 'exception2' :
+                                                            rule.ruleId.includes('PEAK') ? 'mucusPeak' :
+                                                                rule.ruleId.includes('DOUBLE') ? 'doubleCheck' : null;
+
+                                    return (
+                                        <li key={i}>
+                                            {ruleKey ? t(`rules.${ruleKey}`) : rule.ruleName}
+                                        </li>
+                                    );
+                                })}
                             </ul>
                         </div>
 

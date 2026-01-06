@@ -80,9 +80,25 @@
     },
     "why": {
         "title": "Why this status?",
-        "rulesApplied": "Rules applied",
+        "rulesApplied": "How it's calculated",
         "dataUsed": "Data used",
-        "warnings": "Warnings"
+        "warnings": "Things to note"
+    },
+    "rules": {
+        "fiveDay": "The first 5 cycle days are considered infertile (if regular cycles of at least 26 days)",
+        "minus8": "Fertility starts = earliest cycle day with high temperature observed - 8 days",
+        "minus20": "Fertility starts = shortest cycle length - 20 days",
+        "tempShift": "3 consecutive temperatures above the cover line confirm ovulation",
+        "mucusPeak": "The mucus peak (last high quality observation) marks ovulation",
+        "doubleCheck": "Post-ovulatory infertility begins when BOTH temperature AND mucus confirm (whichever comes last)",
+        "exception1": "Exception: 4th temperature needed if the 3rd isn't high enough",
+        "exception2": "Exception: disturbed temperature = 4 high temperatures required"
+    },
+    "status": {
+        "noDataYet": "Enter your observations to get your fertility status",
+        "fertile": "Fertile",
+        "infertile": "Infertile",
+        "indeterminate": "Observing"
     },
     "settings": {
         "title": "Settings",
@@ -130,6 +146,12 @@
     },
     "chart": {
         "title": "Cycle Chart",
+        "legend": {
+            "temperature": "Temperature",
+            "mucus": "Mucus (d, ø, m)",
+            "fertile": "Fertile mucus (S, S+)",
+            "bleeding": "Bleeding"
+        },
         "temperature": "Temperature (°C)",
         "coverLine": "Cover line",
         "peak": "Mucus Peak (P)",
