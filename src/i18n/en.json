@@ -88,14 +88,46 @@
         "warnings": "Things to note"
     },
     "rules": {
-        "fiveDay": "The first 5 cycle days are considered infertile (if regular cycles of at least 26 days)",
-        "minus8": "Fertility starts = earliest cycle day with high temperature observed - 8 days",
-        "minus20": "Fertility starts = shortest cycle length - 20 days",
-        "tempShift": "3 consecutive temperatures above the cover line confirm ovulation",
-        "mucusPeak": "The mucus peak (last high quality observation) marks ovulation",
-        "doubleCheck": "Post-ovulatory infertility begins when BOTH temperature AND mucus confirm (whichever comes last)",
-        "exception1": "Exception: 4th temperature needed if the 3rd isn't high enough",
-        "exception2": "Exception: disturbed temperature = 4 high temperatures required"
+        "fiveDay": {
+            "short": "First 5 Days Rule",
+            "detail": "The first 5 days after your period starts are generally infertile. This rule only applies if your last 12 cycles were at least 26 days long AND no cervical mucus appears during these days.",
+            "source": "Sensiplan p.68"
+        },
+        "minus8": {
+            "short": "Fertility start calculation (experienced)",
+            "detail": "If you've been tracking for several months, the app uses your history: it takes the earliest day your temperature rose, then subtracts 8 days to determine when fertility begins.",
+            "source": "Sensiplan p.72"
+        },
+        "minus20": {
+            "short": "Fertility start calculation (beginner)",
+            "detail": "For new users: we take your shortest cycle length and subtract 20 days. This is a wide safety margin for the first cycles of observation.",
+            "source": "Sensiplan p.70"
+        },
+        "tempShift": {
+            "short": "Temperature rise confirmed",
+            "detail": "Ovulation is confirmed when 3 consecutive temperatures are above the 'cover line' (calculated from the previous 6 temperatures). The 3rd must be at least 0.2°C above.",
+            "source": "Sensiplan p.76"
+        },
+        "mucusPeak": {
+            "short": "Mucus peak identified",
+            "detail": "The 'peak' is the last day you observe high quality mucus (clear, stretchy). After 3 days of lower quality mucus, the peak is confirmed retrospectively.",
+            "source": "Sensiplan p.45"
+        },
+        "doubleCheck": {
+            "short": "Double-check complete",
+            "detail": "Post-ovulatory infertility is only confirmed when BOTH signs (temperature AND mucus) agree. We always take whichever comes last for safety.",
+            "source": "Sensiplan p.82"
+        },
+        "exception1": {
+            "short": "Temperature exception (4th day)",
+            "detail": "If the 3rd high temperature isn't high enough (less than 0.2°C above the line), a 4th high temperature is needed for confirmation.",
+            "source": "Sensiplan p.78"
+        },
+        "exception2": {
+            "short": "Disturbed temperature exception",
+            "detail": "If one of the 3 high temperatures was disturbed (alcohol, poor sleep, illness), 4 high temperatures total are needed to confirm ovulation.",
+            "source": "Sensiplan p.79"
+        }
     },
     "status": {
         "noDataYet": "Enter your observations to get your fertility status",

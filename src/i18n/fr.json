@@ -88,14 +88,46 @@
         "warnings": "Points d'attention"
     },
     "rules": {
-        "fiveDay": "Les 5 premiers jours du cycle sont considérés infertiles (si cycles réguliers d'au moins 26 jours)",
-        "minus8": "Début de fertilité = jour du cycle le plus précoce où une température haute a été observée - 8 jours",
-        "minus20": "Début de fertilité = durée du cycle le plus court - 20 jours",
-        "tempShift": "3 températures consécutives au-dessus de la ligne de couverture confirment l'ovulation",
-        "mucusPeak": "Le pic de glaire (dernière observation de qualité haute) marque l'ovulation",
-        "doubleCheck": "L'infertilité post-ovulatoire commence quand température ET glaire confirment (le plus tardif)",
-        "exception1": "Exception : 4ème température nécessaire si la 3ème n'est pas assez haute",
-        "exception2": "Exception : température perturbée = 4 températures hautes requises"
+        "fiveDay": {
+            "short": "Règle des 5 premiers jours",
+            "detail": "Les 5 premiers jours après le début des règles sont généralement infertiles. Cette règle ne s'applique que si vos 12 derniers cycles ont duré au moins 26 jours ET si aucune glaire cervicale n'apparaît pendant ces jours.",
+            "source": "Sensiplan p.68"
+        },
+        "minus8": {
+            "short": "Calcul du début de fertilité (expérience)",
+            "detail": "Si vous suivez vos cycles depuis plusieurs mois, l'app utilise votre historique : elle prend le jour le plus précoce où votre température a augmenté, puis retire 8 jours pour déterminer quand la fertilité commence.",
+            "source": "Sensiplan p.72"
+        },
+        "minus20": {
+            "short": "Calcul du début de fertilité (débutante)",
+            "detail": "Pour les nouvelles utilisatrices : on prend la durée de votre cycle le plus court et on retire 20 jours. C'est une marge de sécurité large pour les premiers cycles d'observation.",
+            "source": "Sensiplan p.70"
+        },
+        "tempShift": {
+            "short": "Montée de température confirmée",
+            "detail": "L'ovulation est confirmée quand 3 températures consécutives sont au-dessus de la 'ligne de couverture' (calculée à partir des 6 températures précédentes). La 3ème doit être au moins 0.2°C au-dessus.",
+            "source": "Sensiplan p.76"
+        },
+        "mucusPeak": {
+            "short": "Pic de glaire identifié",
+            "detail": "Le 'pic' est le dernier jour où vous observez de la glaire de haute qualité (transparente, filante). Après 3 jours de glaire de moindre qualité, le pic est confirmé rétrospectivement.",
+            "source": "Sensiplan p.45"
+        },
+        "doubleCheck": {
+            "short": "Double vérification complète",
+            "detail": "L'infertilité post-ovulatoire n'est confirmée que lorsque les DEUX signes (température ET glaire) concordent. On prend toujours le plus tardif des deux pour plus de sécurité.",
+            "source": "Sensiplan p.82"
+        },
+        "exception1": {
+            "short": "Exception température (4ème jour)",
+            "detail": "Si la 3ème température haute n'est pas suffisamment élevée (moins de 0.2°C au-dessus de la ligne), il faut attendre une 4ème température haute pour confirmer.",
+            "source": "Sensiplan p.78"
+        },
+        "exception2": {
+            "short": "Exception température perturbée",
+            "detail": "Si l'une des 3 températures hautes a été perturbée (alcool, sommeil agité, maladie), il faut 4 températures hautes au total pour confirmer l'ovulation.",
+            "source": "Sensiplan p.79"
+        }
     },
     "status": {
         "noDataYet": "Saisissez vos observations pour obtenir votre statut de fertilité",

@@ -6,6 +6,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import './DailyEntry.css';
 import Toast from '../Toast';
+import CollapsibleTip from '../CollapsibleTip';
 import {
     db,
     getCurrentCycle,
@@ -87,6 +88,7 @@ export default function DailyEntry({ initialDate, onDateChange }: DailyEntryProp
     const [showNewCycleModal, setShowNewCycleModal] = useState(false);
     const [showWhyModal, setShowWhyModal] = useState(false);
     const [showToast, setShowToast] = useState(false);
+    const [expandedRules, setExpandedRules] = useState<Record<string, boolean>>({});
 
     // Charger les données
     const loadData = useCallback(async () => {
@@ -265,8 +267,10 @@ export default function DailyEntry({ initialDate, onDateChange }: DailyEntryProp
                 <form className="entry-form" onSubmit={(e) => { e.preventDefault(); handleSave(); }}>
                     {/* Temperature */}
                     <div className="form-section">
-                        <label>{t('entry.temperature')}</label>
-                        <p className="help-text">{t('entry.temperatureHelp')}</p>
+                        <label>
+                            {t('entry.temperature')}
+                            <CollapsibleTip content={t('entry.temperatureHelp')} variant="info" />
+                        </label>
                         <div className="temp-row">
                             <input
                                 type="number"
@@ -305,14 +309,16 @@ export default function DailyEntry({ initialDate, onDateChange }: DailyEntryProp
                                 onChange={(e) => setTemperatureExcluded(e.target.checked)}
                             />
                             {t('entry.excluded')}
+                            <CollapsibleTip content={t('entry.excludedHelp')} variant="tip" />
                         </label>
-                        <p className="help-text help-tip">{t('entry.excludedHelp')}</p>
                     </div>
 
                     {/* Cervical Mucus */}
                     <div className="form-section">
-                        <label>{t('entry.mucus')}</label>
-                        <p className="help-text">{t('entry.mucusHelp')}</p>
+                        <label>
+                            {t('entry.mucus')}
+                            <CollapsibleTip content={t('entry.mucusHelp')} variant="info" />
+                        </label>
                         <div className="mucus-options">
                             {MUCUS_OPTIONS.map((option) => (
                                 <button
@@ -336,8 +342,10 @@ export default function DailyEntry({ initialDate, onDateChange }: DailyEntryProp
 
                     {/* Bleeding */}
                     <div className="form-section">
-                        <label>{t('entry.bleeding')}</label>
-                        <p className="help-text">{t('entry.bleedingHelp')}</p>
+                        <label>
+                            {t('entry.bleeding')}
+                            <CollapsibleTip content={t('entry.bleedingHelp')} variant="info" />
+                        </label>
                         <div className="bleeding-options">
                             {BLEEDING_OPTIONS.map((level) => (
                                 <button
@@ -355,8 +363,10 @@ export default function DailyEntry({ initialDate, onDateChange }: DailyEntryProp
 
                     {/* Secondary Symptoms */}
                     <div className="form-section">
-                        <label>{t('entry.symptoms')}</label>
-                        <p className="help-text help-info">{t('entry.symptomsHelp')}</p>
+                        <label>
+                            {t('entry.symptoms')}
+                            <CollapsibleTip content={t('entry.symptomsHelp')} variant="info" />
+                        </label>
                         <div className="symptoms-row">
                             <label className="checkbox-label">
                                 <input
@@ -431,21 +441,49 @@ export default function DailyEntry({ initialDate, onDateChange }: DailyEntryProp
 
                         <div className="why-section">
                             <h3>{t('why.rulesApplied')}</h3>
-                            <ul>
+                            <ul className="rules-list">
                                 {fertilityStatus.rulesApplied.map((rule, i) => {
                                     // Mapper les ruleId vers les clés de traduction
-                                    const ruleKey = rule.ruleId.includes('FIVE') ? 'fiveDay' :
-                                        rule.ruleId.includes('MINUS_8') ? 'minus8' :
-                                            rule.ruleId.includes('MINUS_20') ? 'minus20' :
-                                                rule.ruleId.includes('TEMP') && rule.ruleId.includes('MAIN') ? 'tempShift' :
-                                                    rule.ruleId.includes('EXCEPT') && rule.ruleId.includes('1') ? 'exception1' :
-                                                        rule.ruleId.includes('EXCEPT') && rule.ruleId.includes('2') ? 'exception2' :
-                                                            rule.ruleId.includes('PEAK') ? 'mucusPeak' :
-                                                                rule.ruleId.includes('DOUBLE') ? 'doubleCheck' : null;
+                                    // Les ruleId réels sont: START_5DAY, START_MINUS8, START_MINUS20, 
+                                    // TEMP_MAIN, TEMP_EXCEPTION_1, TEMP_EXCEPTION_2, MUCUS_PEAK, DOUBLE_CHECK
+                                    const ruleKey =
+                                        rule.ruleId.includes('5DAY') || rule.ruleId.includes('FIVE') ? 'fiveDay' :
+                                            rule.ruleId.includes('MINUS_8') || rule.ruleId.includes('MINUS8') ? 'minus8' :
+                                                rule.ruleId.includes('MINUS_20') || rule.ruleId.includes('MINUS20') ? 'minus20' :
+                                                    rule.ruleId.includes('TEMP') && rule.ruleId.includes('MAIN') ? 'tempShift' :
+                                                        (rule.ruleId.includes('EXCEPT') || rule.ruleId.includes('EXCEPTION')) && rule.ruleId.includes('1') ? 'exception1' :
+                                                            (rule.ruleId.includes('EXCEPT') || rule.ruleId.includes('EXCEPTION')) && rule.ruleId.includes('2') ? 'exception2' :
+                                                                rule.ruleId.includes('PEAK') ? 'mucusPeak' :
+                                                                    rule.ruleId.includes('DOUBLE') ? 'doubleCheck' : null;
+
+                                    const isExpanded = ruleKey ? expandedRules[ruleKey] : false;
 
                                     return (
-                                        <li key={i}>
-                                            {ruleKey ? t(`rules.${ruleKey}`) : rule.ruleName}
+                                        <li key={i} className="rule-item">
+                                            <div className="rule-header">
+                                                <span className="rule-name">
+                                                    {ruleKey ? t(`rules.${ruleKey}.short`) : rule.ruleName}
+                                                </span>
+                                                {ruleKey && (
+                                                    <button
+                                                        type="button"
+                                                        className="rule-expand-btn"
+                                                        onClick={() => setExpandedRules(prev => ({
+                                                            ...prev,
+                                                            [ruleKey]: !prev[ruleKey]
+                                                        }))}
+                                                        aria-expanded={isExpanded}
+                                                    >
+                                                        {isExpanded ? '−' : '+'}
+                                                    </button>
+                                                )}
+                                            </div>
+                                            {isExpanded && ruleKey && (
+                                                <div className="rule-detail">
+                                                    <p>{t(`rules.${ruleKey}.detail`)}</p>
+                                                    <span className="rule-source">{t(`rules.${ruleKey}.source`)}</span>
+                                                </div>
+                                            )}
                                         </li>
                                     );
                                 })}
